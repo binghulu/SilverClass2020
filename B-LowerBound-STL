@@ -1,0 +1,30 @@
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+    vector<int> numbers(N);
+    
+     for(int i = 0; i < N; ++i) {
+         cin >> numbers[i];
+     }
+
+    int queryLength;
+    cin >> queryLength;    
+
+    for(int j = 0; j < queryLength; ++j) {
+        int query;
+        cin >> query;
+        auto lowerBoundIt = lower_bound(numbers.begin(), numbers.end(), query);
+        if(*lowerBoundIt == query) {
+            cout << "Yes ";
+        }
+        else {
+            cout << "No ";
+        }
+        cout << distance(numbers.begin(), lowerBoundIt) + 1 << endl;
+    }
+}
