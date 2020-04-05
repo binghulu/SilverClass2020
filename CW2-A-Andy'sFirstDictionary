@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+#include <set>
+using namespace std;
+
+int main(){
+    string n;
+    set<string> words;
+    while (cin >> n){
+        if (n == "\n") break;
+        string word = "";
+        for (int i = 0; i < n.size(); i++){
+            if (n[i] >= 'a' && n[i] <= 'z')
+                word += n[i];
+            else if (n[i] >= 'A' && n[i] <= 'Z') word += n[i]+32;
+            else if (!word.empty()){
+                words.insert(word);
+                word = "";
+            }
+        }
+        if (!word.empty())
+            words.insert(word);
+    }
+
+    for(auto& k: words)
+    {
+        cout<< k <<endl;
+    }
+
+
+}
