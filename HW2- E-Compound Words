@@ -1,0 +1,36 @@
+#include <iostream>
+#include <set>
+#include <vector>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+int main(){
+    set<string> dict;
+    set<string>:: iterator it;
+    vector<string> words;
+    vector<string> compounds;
+    string temp, first, second;
+    while (cin >> temp && (temp != "\n")){
+        dict.insert(temp);
+        words.push_back(temp);
+    }
+    for (int i = 0; i < words.size(); i++){
+        if (words[i].size() == 1) continue;
+        for (int j = 0; j < words[i].size(); j++){
+            first = words[i].substr(0, j);
+            second = words[i].substr(j, words[i].size()-1);
+            it = dict.find(first);
+            if (it == dict.end()) continue;
+            it = dict.find(second);
+            if (it != dict.end()){
+                compounds.push_back(words[i]);
+                break;
+            }
+        }
+    }
+    sort (compounds.begin(), compounds.end());
+    for (int i = 0; i < compounds.size(); i++){
+        cout << compounds[i] << endl;
+    }
+}
