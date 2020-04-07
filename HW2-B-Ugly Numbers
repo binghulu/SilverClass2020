@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#define MAX 1000000000
+
+int main(){
+    vector<bool> numbers(MAX, false);
+    int n = 0;
+    numbers[1] = true;
+    for (long long i = 1; i < MAX; i++){
+        if (numbers[i]){
+            n++;
+            if (i*2 < MAX)
+                numbers[i*2] = true;
+            if (i*3 < MAX)
+                numbers[i*3] = true;
+            if (i*5 < MAX)
+                numbers[i*5] = true;
+            //cout << n << " " << i << endl;
+        }
+        if (n == 1500){
+            cout << "The 1500'th ugly number is "<< i << ".\n";
+            break;
+        }
+    }
+    return 0;
+}
