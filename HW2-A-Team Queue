@@ -1,0 +1,52 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main()
+{
+    int whichteam[1000001];
+    int counter = 0, n, element;
+    int num;
+    while (cin >> num)
+    {
+        if (num == 0) break;
+        counter++;
+        queue<int> team[1001];
+        for (int t = 0; t < num; ++t)
+        {
+            cin >> n;
+            for (int i = 0; i < n; i++){
+                cin >> element;
+                whichteam[element] = t;
+            }
+        }
+
+        queue<int> together;
+
+        cout << "Scenario #" << counter << endl;
+        string command;
+        while (cin >> command, command != "STOP")
+        {
+            if (command == "ENQUEUE")
+            {
+                int num;
+                cin >> num;
+                int m = whichteam[num];
+                if (team[m].empty())
+                    together.push(m);
+
+                team[m].push(num);
+            }
+            else
+            {
+                int m = together.front();
+                cout << team[m].front() << endl;
+                team[m].pop();
+                if (team[m].empty())
+                    together.pop();
+            }
+        }
+        cout << endl;
+    }
+    return 0;
+}
