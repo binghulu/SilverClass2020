@@ -1,0 +1,43 @@
+#include <iostream>
+#include <utility>
+#include <algorithm>
+#include <set>
+#include <vector>
+using namespace std;
+
+int main(){
+    int n;
+    cin >> n;
+
+    int m, x, y;
+    for (int i = 0; i < n; i++){
+        int minX = 100000, maxX = -10000;
+        cin >> m;
+        set<pair<int, int> > coordinates;
+        set<pair<int, int> >:: iterator it;
+        vector<pair<int, int> > temp(m);
+        for (int j = 0; j < m; j++){
+            cin >> x >> y;
+            temp[j] = make_pair(x, y);
+            coordinates.insert(make_pair(x, y));
+            if (x < minX) minX = x;
+            if (x > maxX) maxX = x;
+        }
+        sort(temp.begin(), temp.end());
+        double middle = (minX+maxX)/2.0;
+        bool work = 0;
+        for (int j = 0; j < m/2+1; j++){
+            if (temp[j].first == middle) continue;
+            it = coordinates.find(make_pair(2*middle-temp[j].first, temp[j].second));
+            if (it == coordinates.end()){
+                work = 1;
+                break;
+            }
+        }
+        if (work == 1){
+            cout << "NO" << endl;
+        }
+        else
+            cout << "YES" << endl;
+    }
+}
