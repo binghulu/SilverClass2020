@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <stack>
+using namespace std;
+
+int main(){
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		stack<char> parenthesis;
+		string line;
+		cin >> line;
+		for (int j = 0; j < line.size(); j++){
+			if (line[j] == '(' || line[j] == '['){
+				parenthesis.push(line[j]);
+			}
+			else if (parenthesis.empty()){
+				parenthesis.push('e');
+				break;
+			}
+			else if (line[j] == ')' && parenthesis.top() == '(') parenthesis.pop();
+			else if (line[j] == ']' && parenthesis.top() == '[') parenthesis.pop();
+			else{
+				parenthesis.push('e');
+				break;
+			}
+		}
+		if (parenthesis.size() == 0){
+			cout << "Yes" << endl;
+		}
+		else cout << "No" << endl;
+	}
+}
