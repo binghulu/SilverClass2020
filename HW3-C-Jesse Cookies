@@ -1,0 +1,30 @@
+#include <iostream>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+int main(){
+	int n, k;
+	cin >> n >> k;
+	priority_queue<int> cookies;
+	int sweet;
+	for (int i = 0; i < n; i++){
+		cin >> sweet;
+		cookies.push(-1*sweet);
+	}
+	int cnt = 0;
+	bool sweetness = 0;
+	while (sweetness == 0)
+	{
+		
+		if (cookies.size() == 1 || -1*cookies.top() >= k) break;
+    	int c1 = -1*cookies.top();
+    	cookies.pop();
+    	int c2 = -1*cookies.top();
+    	cookies.pop();
+    	cookies.push(-1*(c1 + 2*c2));
+    	cnt++;
+	}
+	if (-1*cookies.top() < k) cout << -1 << endl;
+	else cout << cnt << endl;
+}
