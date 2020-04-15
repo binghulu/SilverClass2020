@@ -1,0 +1,43 @@
+#include <iostream>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	int t, n, m;
+	cin >> t;
+	while (t--)
+	{
+		cin >> n >> m;
+		vector<int> pts;
+		queue<pair<int, int> > que;
+		for (int i = 0; i < n; i++)
+		{
+			int x;
+			cin >> x;
+			pts.push_back(x);
+			que.push(make_pair(pts[i], i+1));
+		}
+		sort(pts.begin(), pts.end());
+		int maximum = n-1;
+		int time = 0;
+		while (!que.empty())
+		{
+			auto head = que.front();
+			que.pop();
+			if (head.first < pts[maximum])
+				que.push(head);
+			else
+			{
+			    //cout << head.first << endl;
+				time++;
+				if (head.second == m + 1)
+                    //cout << head.first << "time" << endl;
+					cout << time << endl;
+				maximum--;
+			}
+		}
+	}
+	return 0;
+}
