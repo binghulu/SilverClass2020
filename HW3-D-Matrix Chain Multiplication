@@ -1,0 +1,59 @@
+#include <iostream>
+#include <utility>
+#include <string>
+#include <stack>
+using namespace std;
+
+int main()
+{
+    int n;
+    char m;
+    int r, c;
+    pair<int, int> mat[26];
+    char str[1003];
+    cin >> n;
+    for (int i = 0; i < n; i++){
+        cin >> m >> r >> c;
+        mat[m-'A'] = make_pair(r, c);
+    }
+
+    while (cin >> str)
+    {
+        stack<pair<int, int> > stk;
+        bool ok = true;
+        int ans = 0;
+        for (int i=0; str[i]; i++)
+        {
+            pair<int, int> B;
+            if (str[i] == '(')
+            {
+                stk.push(make_pair(-1,-1));
+                continue;
+            }
+            else if (str[i] == ')')
+            {
+                B = stk.top();
+                stk.pop();
+                stk.pop();
+            }
+            else B = mat[str[i]-'A'];
+            if (!stk.empty() && stk.top() != make_pair(-1,-1))
+            {
+                pair<int, int> A = stk.top();
+                stk.pop();
+                if ( A.second != B.first )
+                {
+                    ok = false;
+                    break;
+                }
+                ans += A.first * A.second * B.second;
+                B = make_pair(A.first, B.second);
+            }
+            stk.push(B);
+        }
+        if (ok) printf("%d\n",ans);
+        else puts("error");
+    }
+
+    return 0;
+}
