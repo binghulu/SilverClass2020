@@ -1,0 +1,47 @@
+#include <iostream>
+#include <stack>
+#include <vector>
+using namespace std;
+
+int main(){
+    int n;
+    cin >> n;
+    stack<pair<int, int> > buildings;
+    int counter;
+    long long maximum = 0;
+    int m;
+    for (int i = 0; i < n; i++){
+        cin >> m;
+        if (buildings.empty() || m >= buildings.top().first) buildings.push(make_pair(m, 0));
+        else if (m < buildings.top().first){
+            counter = 0;
+            //cout << "m = " << m << endl;
+            while (buildings.size() != 0){
+                if (m >= buildings.top().first) break;
+                counter += buildings.top().second+1;
+                //cout << "counter = " << counter << endl << buildings.top().first << " "  << buildings.top().second << endl;
+                if (buildings.top().first*(counter) > maximum) maximum = buildings.top().first*(counter);
+                //cout << "maximum = " << maximum << endl;
+                buildings.pop();
+            }
+            //cout << counter << endl;
+            buildings.push(make_pair(m, counter));
+        }
+    }
+    //cout << buildings.size() << endl;
+    counter = 0;
+    int k = buildings.size();
+    for (int i = 0; i < k; i++){
+        counter += buildings.top().second+1;
+        if (buildings.top().first*(counter) > maximum) maximum = buildings.top().first*(counter);
+        //cout << buildings.top().first << " " << buildings.top().second << endl;
+        buildings.pop();
+    }
+    cout << maximum << endl;
+
+    /*int k = buildings.size();
+    for (int i = 0; i < k; i++){
+        cout << buildings.top().first << " " << buildings.top().second << endl;
+        buildings.pop();
+    }*/
+}
