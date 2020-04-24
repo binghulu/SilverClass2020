@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int D, I;
+		cin >> D >> I;
+		int stop = 1;
+		for (int j = 0; j < D-1; j++){
+			if (I%2){
+				stop = 2*stop;
+				I = (I+1)/2;
+			}
+			else{
+				stop = 2*stop+1;
+				I = I/2;
+			}
+		}
+		cout << stop << endl;
+	}
+}
