@@ -1,0 +1,64 @@
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+vector<int> in;
+vector<int> post;
+
+int ans = -1, maxsum;
+
+struct Node{
+    int v;
+    Node *left;
+    Node *right;
+    //Node(): left(NULL), right(NULL) {}
+};
+
+Node* build(int left1, int right1, int left2, int right2){
+    if (left1 >= right1 || left2 >= right2) return NULL;
+    Node* root = new Node;
+    root->v = post[right2-1];
+    int pos = find(in.begin()+left1, in.begin()+right1, post[right2-1]) - in.begin();
+    root->left = build(left1, pos, left2, pos-left1+left2);
+    root->right = build(pos+1, right1, pos-right1+right2, right2-1);
+    return root;
+}
+
+void DFS(Node* root, int sum){
+    if (root->left == NULL && root->right == NULL){
+    	//cout << "here" << endl;
+        sum = sum + root->v;
+        if (sum < maxsum || (sum == maxsum && root->v < ans)){
+        	//cout << "here" << endl;
+            maxsum = sum;
+            ans = root->v;
+        }
+        return;
+    }
+    if (root->left != NULL) DFS(root->left, sum+root->v);
+    if (root->right != NULL) DFS(root->right, sum+root->v);
+}
+
+
+int main(){
+    string s1, s2;
+    int n;
+
+    while(getline(cin, s1) && getline(cin, s2)){
+        in.clear();
+        post.clear();
+        stringstream input1(s1), input2(s2);
+        while (input1 >> n) in.push_back(n);
+        while (input2 >> n) post.push_back(n);
+
+        Node* btree = NULL;
+        btree = build(0, in.size(), 0, post.size());
+        maxsum = 1000000;
+        DFS(btree, 0);
+        cout << ans << endl;
+    }
+    return 0;
+}
