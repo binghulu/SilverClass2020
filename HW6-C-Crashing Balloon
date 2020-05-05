@@ -1,0 +1,30 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+bool A, B;
+
+void dfs(int a, int b, int max){
+	if (A == true) return;
+	if (a == 1 && b == 1){
+		A = true;
+		return;
+	}
+	if (b == 1) B = true;
+	for (int i = max; i > 1; i--){
+		if (a%i == 0) dfs(a/i, b, i-1);
+		if (b%i == 0) dfs(a, b/i, i-1);
+	}
+}
+
+int main(){
+	int a, b;
+	while (cin >> a >> b){
+		if (a < b) swap(a, b);
+		A = false;
+		B = false;
+		dfs(a, b, 100);
+		if (A == true || B == false) cout << a << endl;
+		else cout << b << endl;
+	}
+}
