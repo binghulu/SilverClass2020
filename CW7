@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	int n, m;
+	cin >> n;
+	while (n--){
+		cin >> m;
+		int a[m], max[m];
+		int maximum1 = 0, maximum2 = 0, maxvalue = -99999999;
+		for (int i = 0; i < m; i++){
+			cin >> a[i];
+			if (a[i] > maxvalue) maxvalue = a[i];
+			
+			if (i == 0) max[i] = a[i];
+			else{
+				if (a[i] > (a[i] + max[i-1])) max[i] = a[i];
+				else max[i] = a[i] + max[i-1];
+			}
+			
+			if (a[i] > 0) maximum2 += a[i];
+		}
+		for (int i = 0; i < m; i++){
+			if (max[i] > maximum1) maximum1 = max[i];
+		}
+		if (maxvalue < 0){
+			cout << maxvalue << " " << maxvalue << endl;
+		}
+		else{
+			cout << maximum1 << " ";
+			cout << maximum2 << endl;
+		}
+	}
+}
